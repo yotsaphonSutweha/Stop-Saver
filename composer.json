@@ -1,0 +1,14 @@
+{
+    "name": "web-app/stop-saver",
+    "authors": [
+        {
+            "name": "Josh Cassidy",
+            "email": "joshcassidy79@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "3.1.6",
+        "firebase/php-jwt": "^5.0",
+        "vlucas/phpdotenv": "^2.4"
+    }
+}
