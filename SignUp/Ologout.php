@@ -7,5 +7,5 @@ require_once __DIR__ . '/../Operations/connection.php';
 
 
 $accessToken = new \Symfony\Component\HttpFoundation\Cookie("access_token", "Expired",
-time()-3600, '/', getenv('DOMAIN'));
+time()-3600, '/', getenv('COOKIE_DOMAIN'));
 redirect('/login.php', ['cookies' => [$accessToken]]);

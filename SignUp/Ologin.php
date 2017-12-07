@@ -25,9 +25,9 @@ if(empty($user) || !password_verify(request()->get('password'), $user['password'
                             'user' => findUserByEmail(request()->get('email'))['id'],
                             'exp' => $expTime
                         ], 
-                        getenv("KEY"), 'HS256'
+                        getenv("SECRET_KEY"), 'HS256'
                     ), 
-                    $expTime, '/',  getenv('DOMAIN')
+                    $expTime, '/',  getenv('COOKIE_DOMAIN')
                 )
             ]
         ]

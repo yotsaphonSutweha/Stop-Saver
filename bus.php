@@ -1,73 +1,18 @@
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/Operations/Ops.php';
-require_once __DIR__ . '/Operations/connection.php';
+require_once __DIR__ . '/config/helpers.php';
+require_once __DIR__ . '/config/database.php';
 
-(new Dotenv\Dotenv(__DIR__ . '/Operations'))->load();
+(new Dotenv\Dotenv(__DIR__ . '/config'))->load();
 requireAuth();
+$page_title = "Journeys";
+$page_name = "List Of Buses";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/footer.php";
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="https://use.fontawesome.com/e175f0cc50.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="shortcut icon" href="/logo.ico"> 
-
-  </head>
-  <body>
-    <nav>
-      <div class="nav-wrapper teal">
-        <div class="container">
-          <a href="/" class="brand-logo"><i class="material-icons">directions_bus</i>Stop Saver</a>
-          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-          <ul class="right hide-on-med-and-down">
-            <?php if(!isAuthenticated()) : ?>
-            <li><a href="/login.php">Login</a></li>
-            <li><a href="/register.php">Register</a></li>
-            <?php else: ?>
-            <li><a href="/bus.php">List of Buses</a></li>
-            <li><a href="/add.php">Add a New Bus</a></li>
-            <li><a href="/SignUp/Ologout.php">Logout</a></li>
-            <?php endif; ?>
-          </ul>
-          <ul class="side-nav" id="mobile-demo">
-            <?php if(!isAuthenticated()) : ?>
-            <li><a href="/login.php">Login</a></li>
-            <li><a href="/register.php">Register</a></li>
-            <?php else: ?>
-            <li><a href="/bus.php">List of Buses</a></li>
-            <li><a href="/add.php">Add a New Bus</a></li>
-            <li><a href="/SignUp/Ologout.php">Logout</a></li>
-            <?php endif; ?>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <header class="header">
-      <div class="container center-align">
-        <h1>Journeys</h1>
-      </div>
-    </header>
-    <div class="container">
+     <div class="container">
       
       
           
@@ -78,6 +23,45 @@ requireAuth();
  
         
       
+
+      
+<script type="text/javascript">
+  var proxy = 'https://cors-anywhere.herokuapp.com/';
+  var myUrl = 'http://numbersapi.com/random/math?json';
+  $(function(){
+    // The proxy url expects as first URL parameter the URL to be bypassed
+    // https://cors-anywhere.herokuapp.com/{my-url-to-bypass}
+    url= proxy + myUrl;
+    $.getJSON(url).done(function(data){
+        console.log(data);
+        $("#numfact").append("Your lucky travel number is: "+data.number + "<br/>");
+        $("#numfact").append("Here's a fact about your lucky travel number: " + data.text);
+        $("#y").append(`
+               <ul class="collection with-header">
+              <li class="collection-header grey lighten-4">
+                <h4>Your lucky travel Number is: ${data.number}</h4>
+              </li><li class="collection-item">
+                <ul class="collection with-header" >
+                <li class="collection-header grey lighten-4" >
+                    <h5>
+                      <i class="material-icons">all_inclusive</i>
+                      <span id="route">Here's a luck fact about your lucky travel number!</span>
+                    </h5>
+                  </li>
+                  <li class="collection-item" >
+                    <p>
+                      <strong>Lucky Fact: </strong>
+                      <span id="departure-time">${data.text}</span>
+                    </p>
+                  </li>
+                </ul>
+                </li>
+              </ul>
+            `);
+          }
+      )
+  });
+</script>
         <?php 
         foreach (getAllBuses() as $bus): ?>
  <ul class="collection with-header">
@@ -90,7 +74,7 @@ requireAuth();
             <a href="/edit.php?id=<?php echo $bus['id'] ?>" class="btn-floating">
               <i class="material-icons">create</i>
             </a>
-            <a href="/CRUD/Odelete.php?busId=<?php echo $bus['id']; ?>" class="btn-floating">
+            <a href="/operations/crud/odelete.php?busId=<?php echo $bus['id']; ?>" class="btn-floating">
               <i class="material-icons">delete</i>
             </a>
           </div>
@@ -167,16 +151,6 @@ requireAuth();
                         });
                     });
                     </script>
-                <!--<span><a href="/edit.php?id=<?php echo $bus['id'] ?>"> Edit </a></span> |-->
-                <!--<span><a href="/CRUD/Odelete.php?busId=<?php echo $bus['id']; ?>">Delete</a></span>-->
+                
         <?php endforeach; ?>
-        <script type="text/javascript">
-        $( document ).ready(function(){
-          $(".button-collapse").sideNav();
-        })
-      </script>
         
-</div>
-</div>
-</body>
-</html>
