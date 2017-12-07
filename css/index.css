@@ -1,0 +1,12 @@
+.header {
+  background-color: #f5f5f5;
+  padding: 3em 0;
+  margin-bottom: 3em;
+}
+
+.header h1 {
+  margin-top: 0;
+}
+.buttons {
+  padding: 4em 4em;
+}

@@ -1,8 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../Operations/helpers.php';
-require_once __DIR__ . '/../Operations/database.php';
+require_once __DIR__ . '/../Operations/Ops.php';
+require_once __DIR__ . '/../Operations/connection.php';
 
 (new Dotenv\Dotenv(__DIR__ . '/../Operations'))->load();
 
@@ -15,4 +15,3 @@ try {
 }
 
 \Symfony\Component\HttpFoundation\Response::create(null, \Symfony\Component\HttpFoundation\Response::HTTP_FOUND,['Location' => $redirectTo])->send();
-?>
