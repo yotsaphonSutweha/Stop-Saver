@@ -1,74 +1,55 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/config/helpers.php';
 require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/config/helpers.php';
 
 (new Dotenv\Dotenv(__DIR__ . '/config'))->load();
-requireAuth();
-$page_title = "Journeys";
-$page_name = "List Of Buses";
+$page_title = "Quick Search";
+$page_name = "Search";
 include __DIR__ . "/inc/header.php";
 include __DIR__ . "/inc/footer.php";
 
 ?>
 
-     <div class="container">
+<div class="container">
       
       
           
-        <div id="y"></div>
-
-        <div id="x<?php echo $bus['id']?>"></div>
-       
- 
-        
-        <?php 
-        foreach (getAllBuses() as $bus): ?>
- <ul class="collection with-header">
-      <li class="collection-header grey lighten-4">
-        <h4>
-
-          <?php echo $bus['title']; ?>
-
-          <div class="right">
-            <a href="/edit.php?id=<?php echo $bus['id'] ?>" class="btn-floating">
-              <i class="material-icons">create</i>
-            </a>
-            <a href="/operations/crud/odelete.php?busId=<?php echo $bus['id']; ?>" class="btn-floating">
-              <i class="material-icons">delete</i>
-            </a>
-          </div>
-        </h4>
-      </li>
-      <li class="collection-item">
-          <h5>
-            <strong>
-              Incoming Buses to Bus Stop
-              <?php echo $bus["stopno"] ?>
-            </strong>
-          </h5>
-        <br>
-        <div id="x<?php echo $bus['id']?>"></div>
-       
+      
+      <label>Stop Number</label>
+      <input type="text" name="stop_number" id="quick" placeholder="Stop Number"/>
+        <button class="btn waves-effect waves-light" onclick="getBus()" type="submit" on name="action">
+        Search
+        <i class="material-icons right">send</i>
+      </button>
  
         
       
 
-      </li>
-    </ul>
+      
+    </script>
+    
+    
+
+        <div id="x"></div>
+      
 
                 <div id="details" ><script type="text/javascript">
-                    stopNumber = <?php echo json_encode( $bus['stopno'] ); ?>;
+                function getBus(){
+                    let x= $("#quick").val();
+                    
+                    
                     $(function() {
                       
-                      
-                        $("#x<?php echo $bus['id']?>").append();
-                        $.getJSON('https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid='+<?php echo json_encode( $bus['stopno'] ); ?>+'&format=json').done(function(data){
+                    
+                        
+                        $.getJSON('https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid='+x+'&format=json').done(function(data){
                             console.log(data);
                             if (data.errormessage === ""){
                             for(let j in data.results){
-                                $("#x<?php echo $bus['id']?>").append(
-                                `<ul class="collection with-header" >
+                                $("#x").append(
+                                    `<br/>
+                                <ul class="collection with-header" >
                                     <li class="collection-header grey lighten-4" >
                                         <h5>
                                           <i class="material-icons">directions_bus</i>
@@ -95,13 +76,15 @@ include __DIR__ . "/inc/footer.php";
                                       </li>
                                     </ul>`
                                   );
+                                 
+                                  
                             }    
                             } else {
                                 $("#x<?php echo $bus['id']?>").append(`<ul class="collection with-header" >
                                     <li class="collection-header grey lighten-4" >
                                         <h5>
                                           <i class="material-icons">directions_bus</i>
-                                          <span id="route">Invalid Stop Number: ${stopNumber}</span>
+                                          <span id="route">Invalid Stop Number: ${cures}</span>
                                         </h5>
                                       </li>
                                       <li class="collection-item" ><p><strong>Error:</strong> This bus stop is invalid!!!</p><br/></li>
@@ -110,7 +93,5 @@ include __DIR__ . "/inc/footer.php";
                             
                         });
                     });
-                    </script>
-                
-        <?php endforeach; ?>
-        
+                }
+</script>

@@ -1,38 +1,18 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/Operations/helpers.php';
-require_once __DIR__ . '/Operations/database.php';
+require_once __DIR__ . '/config/helpers.php';
+require_once __DIR__ . '/config/database.php';
 
-(new Dotenv\Dotenv(__DIR__ . '/Operations'))->load();
-
+(new Dotenv\Dotenv(__DIR__ . '/config'))->load();
+$page_title = "Register";
+$page_name = "Register";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/footer.php";
 ?>
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Stop Saver</title>
-
-    </head>
-    <body>
-
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/bus.php">List of Buses</a></li>
-            <li><a href="/add.php">Add a New Bus</a></li>
-        </ul>
-
-       <ul>
-            <?php if(!userAuth()) : ?>
-            <li><a href="/login.php">Login</a></li>
-            <li><a href="/register.php">Register</a></li>
-            <?php else: ?>
-            <li><a href="/SignUp/Ologout.php">Logout</a></li>
-            <?php endif; ?>
-        </ul>
-
-    <div>
-        <form method="post" action="/SignUp/Oregis.php">
-            <h2>Register account</h2>
+<div class="container">
+    <div class="card-panel">
+        <form method="post" action="/operations/signup/oregis.php">
             <label>Email</label>
             <input type="email" name="email" placeholder="Email" required autofocus>
             <br>
@@ -42,11 +22,10 @@ require_once __DIR__ . '/Operations/database.php';
             <label>Confirm Password</label>
             <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             <br>
-            <button type="submit">Register</button>
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Register
+                <i class="material-icons right">send</i>
+            </button>
         </form>
     </div>
-    
-</body>
-</html>
-
-
+</div>

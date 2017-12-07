@@ -1,48 +1,28 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/Operations/helpers.php';
-require_once __DIR__ . '/Operations/database.php';
+require_once __DIR__ . '/config/helpers.php';
+require_once __DIR__ . '/config/database.php';
 
-(new Dotenv\Dotenv(__DIR__ . '/Operations'))->load();
-
-
+(new Dotenv\Dotenv(__DIR__ . '/config'))->load();
+$page_title = "Login";
+$page_name = "Login";
+include __DIR__ . "/inc/header.php";
+include __DIR__ . "/inc/footer.php";
 ?>
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Stop Saver</title>
 
-    </head>
-    <body>
-        
-        
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/bus.php">List of Buses</a></li>
-            <li><a href="/add.php">Add a New Bus</a></li>
-        </ul>
-
-       <ul>
-            <?php if(!userAuth()) : ?>
-            <li><a href="/login.php">Login</a></li>
-            <li><a href="/register.php">Register</a></li>
-            <?php else: ?>
-            <li><a href="/SignUp/Ologout.php">Logout</a></li>
-            <?php endif; ?>
-        </ul>
 
 <div class="container">
-        <form method="post" action="/SignUp/Ologin.php">
-            <h2>Please sign in</h2>
-            <label>Email address</label>
-            <input type="email" name="email" placeholder="Email address" required autofocus>
-            <br>
-            <label>Password</label>
-            <input type="password" name="password" placeholder="Password" required>
-            <br>
-            <button type="submit">Sign in</button>
-        </form>
-    </div>
+  <div class="col s12 m6 offset-m3 l4 offset-l4  card-panel">
+    <form method="post" action="/operations/signup/ologin.php">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Email address" required autofocus>
+      <br>
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Password" required>
+      <br>
+      <button class="btn waves-effect waves-light" type="submit" name="action">
+        Login
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
 </div>
-</body>
-</html>
