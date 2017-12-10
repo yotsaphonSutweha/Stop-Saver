@@ -6,10 +6,10 @@
     
     // Removing Special Characters from Strings to Prevent Cross Side Scripting
     function sanitizeString($string) {
-        return preg_replace("/[^\w\s@.]/", "", $string);
+        return preg_replace("/[^\w\s@.!?]/", "", $string);
     }
     
-    // Create bus journeys, inserting user inuts into database.
+    // Create bus journeys, inserting user inputs into database.
     function addJourney($title, $stop_number) {
         global $db;
         $ownerId = getUser();
@@ -114,7 +114,6 @@
             $stmt->bindParam(':email', $email);
             $email = sanitizeString($email);
             $stmt->bindParam(':password', $password);
-            $password = sanitizeString($password);
             $stmt->execute();
             return getUserEmail($username);
         }catch(\Exception $e){
@@ -146,7 +145,7 @@
                 request()->cookies->get('access_token'),
                 getenv('KEY'),
                 ['HS256']
-                );
+            );
                 return true;
         }catch(\Exception $e){
                 return false;
@@ -199,3 +198,4 @@
             ]
         );
     }
+?>

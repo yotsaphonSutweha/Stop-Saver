@@ -19,5 +19,3 @@
         <a class="waves-effect waves-light btn-large" href="/bus.php"><i class="material-icons">directions_bus</i></a>
     </div>
 <?php endif; ?>
-
-  

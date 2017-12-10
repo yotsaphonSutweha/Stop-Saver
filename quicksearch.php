@@ -22,9 +22,10 @@
             let quicksearch = $("#quicksearch").val();
             $(function() {
                 $.getJSON('https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid='+quicksearch+'&format=json').done(function(data){
+                    $("#bus").html("");
                     if (data.errormessage === ""){
                         for(let j in data.results){
-                            $("#bus").html(`
+                            $("#bus").append(`
                                 <br/>
                                 <ul class="collection with-header" >
                                     <li class="collection-header grey lighten-4" >
@@ -35,12 +36,12 @@
                                       </li>
                                       <li class="collection-item" >
                                         <p>
-                                          <strong>Due in: </strong>
-                                          <span id="due">${data.results[j].route}</span>
+                                          <strong>Bus Number: </strong>
+                                          <span id="bus">${data.results[j].route}</span>
                                         </p>
                                         <p>
                                           <strong>Due in: </strong>
-                                          <span id="departure-time">${data.results[j].duetime === "Due" ? data.results[j].duetime : data.results[j].duetime+ " Minutes"} </span>
+                                          <span id="due">${data.results[j].duetime === "Due" ? data.results[j].duetime : data.results[j].duetime+ " Minutes"} </span>
                                         </p>
                                         <p>
                                           <strong>Departure time: </strong>
@@ -48,7 +49,7 @@
                                         </p>
                                         <p>
                                           <strong>Destination: </strong>
-                                          <span id="departure-time">${data.results[j].destination}</span>
+                                          <span id="destination">${data.results[j].destination}</span>
                                         </p>
                                       </li>
                                 </ul>
@@ -56,11 +57,12 @@
                         }
                     } else {
                         $("#bus").html(`
+                            <br/>
                             <ul class="collection with-header" >
                                 <li class="collection-header grey lighten-4" >
                                     <h5>
-                                        <i class="material-icons">directions_bus</i>
-                                        <span id="route">Invalid Stop Number: ${quicksearch}</span>
+                                        <i class="material-icons">error</i>
+                                        <span id="bus">Invalid Stop Number: ${quicksearch}</span>
                                     </h5>
                                 </li>
                                 <li class="collection-item" >
